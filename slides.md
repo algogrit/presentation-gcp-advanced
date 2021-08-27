@@ -765,8 +765,245 @@ class: center, middle
 ### K8s Basics (Cluster Computing)
 
 ---
+class: center, middle
 
+#### Nodes
 
+`Node = machine`
+
+---
+
+- Kubernetes runs your workload by placing containers into Pods to run on Nodes.
+- A node may be a virtual or physical machine, depending on the cluster.
+- Each node contains the services necessary to run Pods, managed by the control plane.
+
+##### Useful commands
+
+- `kubectl get nodes`
+- `-o wide` for more information
+- `kubectl describe`
+
+---
+class: center, middle
+
+### Running our first container on a Kubernetes cluster
+
+---
+class: center, middle
+
+`kubectl run --image=agarwalconsulting/fib-gen fibonacci`
+
+---
+class: center, middle
+
+### Workloads
+
+---
+class: center, middle
+
+#### Pods
+
+---
+
+- Pods are the smallest deployable units of computing that can be created and managed in Kubernetes.
+
+- A Pod *(as in a pod of whales or pea pod)* is a group of one or more containers *(such as Docker containers)*, with shared storage/network, and a specification for how to run the containers.
+
+- A Pod always runs on a Node.
+
+- Every pod gets a unique IP.
+
+- If multiple containers per pod, pods can communicate with localhost.
+
+##### Useful `kubectl` commands
+
+- `kubectl get pods -o`
+- `kubectl describe pods`
+- `kubectl logs -f <name>`
+- `kubectl exec`
+- `kubectl delete pod <name>`
+
+---
+class: center, middle
+
+#### Relation between Pods and containers
+
+![Pods](assets/images/pods/pods.png)
+
+---
+class: center, middle
+
+#### Relation between Nodes and Pods
+
+![Nodes and Pods](assets/images/pods/nodes-ands-pods.png)
+
+---
+class: center, middle
+
+Kubernetes supports *declarative* management of objects
+
+---
+class: center, middle
+
+Take a look at another e-commerce application: [RVStore](https://github.com/AgarwalConsulting/rvstore/blob/master/services.md)
+
+---
+class: center, middle
+
+Kubernetes chose simplicity and skipped the dynamic port-allocation deal. It just assumes that all containers can communicate with each other without Network Address Translation (NAT), that all containers can communicate with each node (and vice-versa), and that the IP that a container sees for itself is the same that the other containers see for it.
+
+.content-credits[https://blog.octo.com/en/how-does-it-work-docker-part-2-swarm-networking/]
+
+---
+
+In Kubernetes, there are 3 entities which have IPs assigned:
+
+- Pods
+  - Containers in a Pod share the same IP
+
+- Service
+
+- Nodes
+
+---
+class: center, middle
+
+### Networking, Load Balancing & Discovery: [`service`](https://kubernetes.io/docs/concepts/services-networking/service/)
+
+---
+
+#### Overview
+
+- An abstract way to expose an application running on a set of Pods as a network service.
+
+- The service resource also lets you expose an application running in Pods to be reachable from outside your cluster.
+
+- Containers within a Pod use networking to communicate via loopback.
+
+---
+class: center, middle
+
+#### [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress)
+
+*An API object that manages external access to the services in a cluster, typically HTTP.*
+
+---
+class: center, middle
+
+Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. Traffic routing is controlled by rules defined on the Ingress resource.
+
+---
+class: center, middle
+
+## Intro to Distributed Systems
+
+---
+class: center, middle
+
+A distributed system is a system whose components are located on different networked computers, which communicate and coordinate their actions by passing messages to one another from any system.
+
+---
+
+- A computer program that runs within a distributed system is called a distributed program (and distributed programming is the process of writing such programs). There are many different types of implementations for the message passing mechanism, including pure *HTTP*, *RPC-like connectors* and *message queues*.
+
+- Distributed computing also refers to the use of distributed systems to solve computational problems. In distributed computing, a problem is divided into many tasks, each of which is solved by one or more computers, which communicate with each other via message passing.
+
+---
+
+### Design issues of distributed system
+
+- *Heterogeneity*: Heterogeneity is applied to the network, computer hardware, operating system and implementation of different developers. A key component of the heterogeneous distributed system client-server environment is middleware. Middleware is a set of services that enables application and end-user to interacts with each other across a heterogeneous distributed system.
+
+- *Openness*: The openness of the distributed system is determined primarily by the degree to which new resource-sharing services can be made available to the users. Open systems are characterized by the fact that their key interfaces are published. It is based on a uniform communication mechanism and published interface for access to shared resources. It can be constructed from heterogeneous hardware and software.
+
+- *Scalability*: Scalability of the system should remain efficient even with a significant increase in the number of users and resources connected.
+
+---
+
+- *Security*: Security of information system has three components Confidentially, integrity and availability. Encryption protects shared resources, keeps sensitive information secrets when transmitted.
+
+- *Failure Handling*: When some faults occur in hardware and the software program, it may produce incorrect results or they may stop before they have completed the intended computation so corrective measures should to implemented to handle this case.
+
+Failure handling is difficult in distributed systems because the failure is partial i.e., some components fail while others continue to function.
+
+---
+
+- *Concurrency*: There is a possibility that several clients will attempt to access a shared resource at the same time. Multiple users make requests on the same resources, i.e read, write, and update. Each resource must be safe in a concurrent environment. Any object that represents a shared resource a distributed system must ensure that it operates correctly in a concurrent environment.
+
+- *Transparency*: Transparency ensures that the distributes system should be perceived as a single entity by the users or the application programmers rather than the collection of autonomous systems, which is cooperating. The user should be unaware of where the services are located and the transferring from a local machine to a remote one should be transparent.
+
+---
+class: center, middle
+
+### CAP Theorem
+
+---
+
+In theoretical computer science, the CAP theorem, also named Brewer's theorem after computer scientist Eric Brewer, states that it is impossible for a distributed data store to simultaneously provide more than two out of the following three guarantees:
+
+- *Consistency*: Every read receives the most recent write or an error
+
+- *Availability*: Every request receives a (non-error) response, without the guarantee that it contains the most recent write
+
+- *Partition tolerance*: The system continues to operate despite an arbitrary number of messages being dropped (or delayed) by the network between nodes
+
+---
+
+When a network partition failure happens should we decide to
+
+- Cancel the operation and thus decrease the availability but ensure consistency
+
+- Proceed with the operation and thus provide availability but risk inconsistency
+
+---
+class: center, middle
+
+![CAP Theorem](assets/images/cap-theorem.png)
+
+.image-credits[https://dzone.com/articles/understanding-the-cap-theorem]
+
+---
+class: center, middle
+
+The CAP theorem implies that in the presence of a network partition, one has to choose between consistency and availability.
+
+*Note that consistency as defined in the CAP theorem is quite different from the consistency guaranteed in ACID database transactions.*
+
+---
+class: center, middle
+
+### Distributed consensus
+
+---
+class: center, middle
+
+Distributed consensus is to make all processes in a system to agree on a single value after one or more processes propose this value.
+
+---
+
+- The industrial application of distributed consensus is to build the multi-replicated state machine model to achieve high availability and strong consistency.
+
+- Distributed consensus allows multiple machines to share the same state and run the same deterministic state machine, so that the entire machine can continue working normally when a few machines fail.
+
+---
+
+Multiple algogritms
+
+- [Raft](https://raft.github.io/)
+
+- [Paxos](https://www.cs.rutgers.edu/~pxk/417/notes/paxos.html)
+
+---
+class: center, middle
+
+Let's take the ecommerce app to the cloud...
+
+---
+class: center, middle
+
+## GCP Offerings
+
+---
 
 ---
 class: center, middle
