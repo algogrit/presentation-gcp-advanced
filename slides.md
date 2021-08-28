@@ -1030,6 +1030,127 @@ class: center, middle
 ... but before that...
 
 ---
+class: center, middle
+
+### Understanding Resource Hierarchy in GCP
+
+.content-credits[https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy#organizations]
+
+---
+
+Purpose of the Google Cloud resource hierarchy is two-fold:
+
+- Provide a hierarchy of ownership, which binds the lifecycle of a resource to its immediate parent in the hierarchy.
+
+- Provide attach points and inheritance for access control and organization policies.
+
+---
+
+4 main components
+
+- Organizations
+
+- Folders
+
+- Projects
+
+- Resources
+
+---
+class: center, middle
+
+![Resource-Hierarchy](assets/images/gcp/cloud-folders-hierarchy.png)
+
+---
+class: center, middle
+
+### Permission & Roles
+
+---
+
+- Permissions
+
+  Permissions determine what operations are allowed on a resource
+
+- Roles
+
+  A role is a collection of permissions. You cannot grant a permission to the user directly.
+
+---
+
+There are several kinds of roles in IAM:
+
+- Basic roles: Roles historically available in the Google Cloud Console. These roles are `Owner`, `Editor`, and `Viewer`.
+
+- Predefined roles: Roles that give finer-grained access control than the basic roles. For example, the predefined role Pub/Sub Publisher (roles/pubsub.publisher) provides access to only publish messages to a Pub/Sub topic.
+
+- Custom roles: Roles that you create to tailor permissions to the needs of your organization when predefined roles don't meet your needs.
+
+---
+class: center, middle
+
+![Roles & Permissions](assets/images/gcp/role-and-permissions.svg)
+
+---
+class: center, middle
+
+### Members & IAM Policy
+
+---
+
+Members can be of the following types:
+
+- Google Account
+
+- Service account
+
+- Google group
+
+- Google Workspace domain
+
+- Cloud Identity domain
+
+- All authenticated users
+
+- All users
+
+---
+class: center, middle
+
+Each member type is identified with a prefix, such as a Google Account (`user:`), service account (`serviceAccount:`), Google group (`group:`), or a Google Workspace or Cloud Identity domain (`domain:`).
+
+---
+class: center, middle
+
+*With IAM, every API method across all Google Cloud services is checked to ensure that the account making the API request has the appropriate permission to use the resource.*
+
+---
+
+- An IAM policy is represented by the IAM Policy object.
+
+- An IAM Policy object consists of a list of *role bindings*.
+
+- A *role binding* binds a list of `members` to a `role`.
+
+---
+class: center, middle
+
+![IAM Policy](assets/images/gcp/iam-policy.png)
+
+---
+class: center, middle
+
+![Policy Inheritance](assets/images/gcp/policy-inheritance.png)
+
+---
+class: center, middle
+
+![Org Policy Inheritance](assets/images/gcp/org-policy.svg)
+
+---
+class: center, middle
+
+...coming back to deployment!
 
 ---
 class: center, middle
@@ -1037,6 +1158,169 @@ class: center, middle
 ## GCP Offerings
 
 ---
+class: center, middle
+
+### Compute Engine
+
+![Compute Engine](assets/images/gcp/compute-engine.png)
+
+---
+class: center, middle
+
+*Secure and customizable compute service that lets you create and run virtual machines on Google’s infrastructure.*
+
+---
+class: center, middle
+
+*VMs are the underlying hardware you use for developing apps and running your workloads. All VMs are categorized by machine family.*
+
+---
+
+Machine configurations are defined by the following terms:
+
+- Machine family: A curated set of processor and hardware configurations optimized for specific workloads. During the VM creation process, you choose your preferred machine family and configure your VM.
+
+- Series: Within the console, machine families are further classified by series generation. Newer VMs are listed under second generation, and older VMs are listed under first generation.
+
+- Machine type: Every machine family has predefined machine shapes that have a specific vCPU to memory ratio that fits a variety of workload needs. If a predefined machine type does not meet your needs, you can create a custom machine for any general-purpose VM.
+
+---
+class: center, middle
+
+![Machine Families](assets/images/gcp/compute-engine-machine-families.png)
+
+.content-credits[https://cloud.google.com/compute/docs/machine-types]
+
+---
+class: center, middle
+
+*Compute Engine instances can run the public images for Linux and Windows Server that Google provides as well as private custom images that you can create or import from your existing systems.*
+
+---
+class: center, middle
+
+[Compute Images](https://console.cloud.google.com/compute/images)
+
+---
+class: center, middle
+
+*Simple enough for Monolith.* How about micro-services?
+
+---
+
+Many options:
+
+- Docker containers
+
+- Multiple VM instances
+
+---
+class: center, middle
+
+#### VPC & Subnets
+
+---
+class: center, middle
+
+Virtual Private Cloud (VPC) provides networking functionality to *Compute Engine virtual machine* (VM) instances, *Google Kubernetes Engine* (GKE) clusters, and the App Engine flexible environment.
+
+---
+class: center, middle
+
+A *VPC network* is a **global** resource that consists of a list of **regional** virtual subnetworks (*subnets*) in data centers, all connected by a global wide area network.
+
+---
+class: center, middle
+
+![VPC Overview](assets/images/gcp/vpc-overview-example.png)
+
+---
+
+#### CIDR Refresher
+
+- 10.0.0.0/8
+
+- 192.168.0.0/16
+
+- 172.16.0.0/12
+
+- 169.254.0.0/16
+
+What do these values mean?
+
+---
+
+##### Private IPv4 ranges
+
+- **10.0.0.0/8**
+
+- **192.168.0.0/16**
+
+- **172.16.0.0/12**
+
+---
+
+A VPC network provides the following:
+
+- Provides connectivity for your Compute Engine virtual machine (VM) instances, including Google Kubernetes Engine (GKE) clusters, App Engine flexible environment instances, and other Google Cloud products built on Compute Engine VMs.
+
+- Offers built-in Internal TCP/UDP Load Balancing and proxy systems for Internal HTTP(S) Load Balancing.
+
+- Connects to on-premises networks using Cloud VPN tunnels and Cloud Interconnect attachments.
+
+- Distributes traffic from Google Cloud external load balancers to backends.
+
+---
+class: center, middle
+
+VPC networks are logically isolated from each other in Google Cloud.
+
+---
+class: center, middle
+
+Too much configuration!
+
+---
+class: center, middle
+
+### App Engine
+
+![App Engine](assets/images/gcp/app-engine.png)
+
+---
+class: center, middle
+
+An App Engine app is made up of a single application resource that consists of one or more services.
+
+---
+class: center, middle
+
+![App Engine](assets/images/gcp/app-engine_modules-hierarchy.png)
+
+---
+
+#### Drawbacks of App Engine
+
+- Locked into Google App Engine
+
+- Developers have read-only access to the filesystem on App Engine.
+
+- App Engine can only execute code called from an HTTP request (except for scheduled background tasks).
+
+- Users may upload arbitrary Python modules, but only if they are pure-Python; C and Pyrex modules are not supported.
+
+- App Engine limits the maximum rows returned from an entity get to 1000 rows per Datastore call. (Update - App Engine now supports cursors for accessing larger queries)
+
+- Java applications may only use a subset (The JRE Class White List) of the classes from the JRE standard edition.
+
+- Java applications cannot create new threads.
+
+---
+class: center, middle
+
+#### App Engine Limitations
+
+![App Engine Limits](assets/images/gcp/app-engine_limits.png)
 
 ---
 class: center, middle
