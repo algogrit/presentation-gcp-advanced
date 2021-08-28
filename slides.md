@@ -1337,6 +1337,14 @@ class: center, middle
 ## Going Serverless...
 
 ---
+
+- No infra management
+
+- Fully managed security
+
+- Pay only for usage
+
+---
 class: center, middle
 
 Code
