@@ -1219,6 +1219,8 @@ class: center, middle
 
 #### VPC & Subnets
 
+.content-credits[https://cloud.google.com/vpc/docs/overview]
+
 ---
 class: center, middle
 
@@ -1321,6 +1323,18 @@ class: center, middle
 #### App Engine Limitations
 
 ![App Engine Limits](assets/images/gcp/app-engine_limits.png)
+
+---
+class: center, middle
+
+### GKE
+
+![GKE](assets/images/gcp/gke.png)
+
+---
+class: center, middle
+
+## Going Serverless...
 
 ---
 class: center, middle
