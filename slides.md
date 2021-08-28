@@ -651,6 +651,32 @@ Docker can also manage:
 ---
 class: center, middle
 
+#### Alternatives to Docker
+
+---
+class: center, middle
+
+*LXC (Linux Containers) is an operating-system-level virtualization method for running multiple isolated Linux systems (containers) on a control host using a **single Linux kernel**.*
+
+![LXC](assets/images/lxc-logo.png)
+
+.content-credits[https://linuxcontainers.org/]
+
+---
+
+- [Podman](https://podman.io/)
+
+- [CRI-O](https://cri-o.io/)
+
+- [Katacontainers](https://katacontainers.io/)
+
+- [gVisor](https://gvisor.dev/)
+
+- ...
+
+---
+class: center, middle
+
 #### [12 Factor](https://12-factor-apps.slides.algogrit.com/) Apps
 
 ---
@@ -987,7 +1013,7 @@ Distributed consensus is to make all processes in a system to agree on a single 
 
 ---
 
-Multiple algogritms
+Common consensus algorithms
 
 - [Raft](https://raft.github.io/)
 
@@ -997,6 +1023,13 @@ Multiple algogritms
 class: center, middle
 
 Let's take the ecommerce app to the cloud...
+
+---
+class: center, middle
+
+... but before that...
+
+---
 
 ---
 class: center, middle
