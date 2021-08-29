@@ -1347,6 +1347,25 @@ class: center, middle
 ---
 class: center, middle
 
+### [Functions Framework](https://cloud.google.com/functions/docs/functions-framework)
+
+---
+class: center, middle
+
+#### Cloud Run
+
+![Cloud Run](assets/images/gcp/cloud-run.png)
+
+---
+class: center, middle
+
+#### Cloud Functions
+
+![Cloud Functions](assets/images/gcp/cloud-functions.png)
+
+---
+class: center, middle
+
 Code
 https://github.com/AgarwalConsulting/GCP-Training
 
