@@ -1334,34 +1334,7 @@ class: center, middle
 ---
 class: center, middle
 
-## Going Serverless...
-
----
-
-- No infra management
-
-- Fully managed security
-
-- Pay only for usage
-
----
-class: center, middle
-
-### [Functions Framework](https://cloud.google.com/functions/docs/functions-framework)
-
----
-class: center, middle
-
-#### Cloud Run
-
-![Cloud Run](assets/images/gcp/cloud-run.png)
-
----
-class: center, middle
-
-#### Cloud Functions
-
-![Cloud Functions](assets/images/gcp/cloud-functions.png)
+## Going [Serverless](https://gcp-cloud-functions.slides.agarwalconsulting.io/)...
 
 ---
 class: center, middle
